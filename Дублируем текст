@@ -1,0 +1,41 @@
+Требования:
+1. Класс Solution должен содержать класс TestString.
+2. Класс Solution должен содержать публичное статическое поле testString типа TestString, которое сразу проинициализировано.
+3. Класс TestString должен содержать публичный void метод printSomething().
+4. Метод printSomething() класса TestString должен выводить на экран строку "it's a text for testing".
+5. В методе main(String[] args) программа должна считывать имена файлов с консоли (используй BufferedReader).
+6. В методе main(String[] args) BufferedReader для считывания данных с консоли должен быть закрыт.
+7. Метод main(String[] args) класса Solution должен создавать поток PrintStream (используй PrintStream c конструктором принимающим ByteArrayOutputStream).
+8. Метод main(String[] args) класса Solution должен подменять и восстанавливать поток вывода в консоль объекта System.out.
+9. Метод main(String[] args) класса Solution должен один раз вызвать метод printSomething() объекта testString.
+10. Метод main(String[] args) класса Solution должен выводить и в консоль и в файл строку выведенную методом printSomething() (используй FileOutputStream).
+11. Поток записи в файл (FileOutputStream) должен быть закрыт.
+
+public class Solution {
+    public static TestString testString = new TestString();
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String filename = reader.readLine();
+        reader.close();
+        PrintStream console = System.out;
+        ByteArrayOutputStream array = new ByteArrayOutputStream();
+        PrintStream newStream = new PrintStream(array);
+        System.setOut(newStream);
+        testString.printSomething();
+        System.setOut(console);
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(new File(filename))) {
+            fileOutputStream.write(array.toByteArray());
+        }
+
+        String s = array.toString();
+        System.out.println(s);
+    }
+
+    public static class TestString {
+        public void printSomething() {
+            System.out.println("it's a text for testing");
+        }
+    }
+}
