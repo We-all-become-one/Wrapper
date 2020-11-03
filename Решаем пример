@@ -1,0 +1,41 @@
+Требования:
+1. Класс Solution должен содержать класс TestString.
+2. Класс Solution должен содержать публичное статическое поле testString типа TestString, которое сразу проинициализировано.
+3. Класс TestString должен содержать публичный void метод printSomething().
+4. Метод printSomething() класса TestString должен выводить на экран строку "3 + 6 = ".
+5. Метод main(String[] args) класса Solution должен создавать поток PrintStream (используй PrintStream c параметром конструктора ByteArrayOutputStream).
+6. Метод main(String[] args) класса Solution должен подменять и восстанавливать поток вывода в консоль объекта System.out.
+7. Метод main(String[] args) класса Solution должен вызывать метод printSomething(),объекта testString.
+8. Метод main(String[] args) класса Solution должен модифицировать строку выведенную методом printSomething() согласно заданию, и выводить её в консоль.
+
+public class Solution {
+    public static TestString testString = new TestString();
+
+    public static void main(String[] args) {
+        PrintStream console = System.out;
+        ByteArrayOutputStream array = new ByteArrayOutputStream();
+        PrintStream newStream = new PrintStream(array);
+        System.setOut(newStream);
+        testString.printSomething();
+        String formula = array.toString();
+        System.setOut(console);
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(formula);
+        ArrayList<Integer> ints = new ArrayList<>();
+        while (matcher.find()) {
+            ints.add(Integer.parseInt(matcher.group()));
+        }
+        int c = 0;
+        if (formula.contains("+")) c = ints.get(0) + ints.get(1);
+        else if (formula.contains("-")) c = ints.get(0) - ints.get(1);
+        else if (formula.contains("*")) c = ints.get(0) * ints.get(1);
+        formula = formula + c;
+        System.out.println(formula);
+    }
+
+    public static class TestString {
+        public void printSomething() {
+            System.out.println("3 + 6 = ");
+        }
+    }
+}
