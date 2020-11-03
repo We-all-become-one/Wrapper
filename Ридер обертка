@@ -1,15 +1,25 @@
+Требования:
+1. Класс Solution должен содержать класс TestString.
+2. Класс Solution должен содержать публичное статическое поле testString типа TestString, которое сразу проинициализировано.
+3. Класс TestString должен содержать публичный void метод printSomething().
+4. Метод printSomething() класса TestString должен выводить на экран строку "it's a text for testing".
+5. Метод main(String[] args) класса Solution должен создавать поток PrintStream (используй PrintStream c параметром конструктора ByteArrayOutputStream).
+6. Метод main(String[] args) класса Solution должен подменять и восстанавливать поток вывода в консоль объекта System.out
+7. Метод main(String[] args) класса Solution должен вызывать метод printSomething(),объекта testString.
+8. Метод main(String[] args) класса Solution должен модифицировать строку выведенную методом printSomething() согласно заданию, и выводить её в консоль.
+
 public class Solution {
     public static TestString testString = new TestString();
 
     public static void main(String[] args) {
         PrintStream console = System.out;
-        ByteArrayOutputStream newOutputArray = new ByteArrayOutputStream();
-        PrintStream newStream = new PrintStream(newOutputArray);
+        ByteArrayOutputStream array = new ByteArrayOutputStream();
+        PrintStream newStream = new PrintStream(array);
         System.setOut(newStream);
         testString.printSomething();
-        String s = newOutputArray.toString();
+        String s = array.toString();
         System.setOut(console);
-        s = s.toUpperCase();
+        s = s.replace("te", "??");
         System.out.println(s);
     }
 
