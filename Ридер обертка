@@ -1,0 +1,21 @@
+public class Solution {
+    public static TestString testString = new TestString();
+
+    public static void main(String[] args) {
+        PrintStream console = System.out;
+        ByteArrayOutputStream newOutputArray = new ByteArrayOutputStream();
+        PrintStream newStream = new PrintStream(newOutputArray);
+        System.setOut(newStream);
+        testString.printSomething();
+        String s = newOutputArray.toString();
+        System.setOut(console);
+        s = s.toUpperCase();
+        System.out.println(s);
+    }
+
+    public static class TestString {
+        public void printSomething() {
+            System.out.println("it's a text for testing");
+        }
+    }
+}
