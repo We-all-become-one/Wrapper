@@ -1,0 +1,39 @@
+В методе main подмени объект System.out написанной тобой реадер-оберткой.
+Твоя реадер-обертка должна выводить на консоль контекстную рекламу после каждого второго println-а.
+Вызови готовый метод printSomething(), воспользуйся testString.
+Верни переменной System.out первоначальный поток.
+Рекламный текст: "JavaRush - курсы Java онлайн"
+
+public class Solution {
+    public static TestString testString = new TestString();
+
+    public static void main(String[] args) {
+        PrintStream console = System.out;
+        ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(arrayOutputStream);
+        System.setOut(printStream);
+        testString.printSomething();
+        String text = arrayOutputStream.toString();
+        String[] lines = text.split(System.lineSeparator());
+        System.setOut(console);
+        int count = 0;
+        for (String line : lines) {
+            System.out.println(line);
+            count++;
+            if (count == 2) {
+                System.out.println("JavaRush - курсы Java онлайн");
+                count = 0;
+            }
+        }
+    }
+
+    public static class TestString {
+        public void printSomething() {
+            System.out.println("first");
+            System.out.println("second");
+            System.out.println("third");
+            System.out.println("fourth");
+            System.out.println("fifth");
+        }
+    }
+}
